@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Usuários</h2>
+
+        <div class="user-list-container">
+            <button class="add-button" onclick="window.location.href='register.html'">Cadastrar Novo Usuário</button>
+            
+            <table class="user-list-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome de Usuário</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch('http://127.0.0.1:5000/users')
+            .then(response => response.json())
+            .then(data => {
+                const userList = document.querySelector('#user-list');
+                data.users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${user.id}</td><td>${user.username}</td>`;
+                    userList.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar usuários:', error));
+    </script>
+</body>
+</html>
